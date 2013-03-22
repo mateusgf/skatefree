@@ -58,9 +58,21 @@ end
 
 
 -- Place player image
-local player = display.newImage ("player.png"); 
-player.x = _W;
-player.y = 80;
+-- local player = display.newImage ("player.png"); 
+-- player.x = _W;
+-- player.y = 80;
+
+-- A sprite sheet with a green dude
+local player = graphics.newImageSheet( "player.png", { width=50, height=50, numFrames=4 } )
+-- player.x = _W;
+-- player.y = 80;
+
+-- play 2 frames every 500 ms
+local instance2 = display.newSprite( player, { name="man", start=1, count=1, time=500 } )
+instance2.x = _W;
+instance2.y = 80
+instance2:play()
+
 
 -- Set up player's speed
 local playerMoveX = 0;
@@ -130,6 +142,13 @@ end
 function rightArrow:touch( event )
 	if event.phase == 'began' then
 		--can_move = false
+
+
+		instance2 = display.newSprite( player, { name="man", start=2, count=1, time=500 } )
+		instance2.x = _W;
+		instance2.y = 80
+		instance2:play()
+
 
 		playerMoveX = speed;
 		playerMoveY = 0;
