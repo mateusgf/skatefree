@@ -8,7 +8,8 @@ _W = display.contentWidth / 2
 _H = display.contentHeight / 2
 
 -- Velocidade padrão do background
-local speed_background = 10
+local speed_background = 0
+-- 4
 
 -- Flag para determinar se o background deve mover
 local can_move = true
@@ -17,7 +18,11 @@ local can_move = true
 local scores = 0;
 
 -- Label Life
-local life = 10;
+-- life padrao: 30
+local life = 30;
+
+-- Status do jogo
+local status_game = 'playing'
 
 
 -- streetBg
@@ -30,6 +35,13 @@ local streetBg2 = display.newImage( "images/street.png" )
 streetBg2:setReferencePoint( display.CenterLeftReferencePoint )
 streetBg2.x = 0
 streetBg2.y = 480
+
+local endline = display.newImage( "images/endline.png" )
+endline:setReferencePoint( display.CenterLeftReferencePoint )
+endline.type = 'endline'
+endline.x = 0
+endline.y = 45670
+physics.addBody(endline, 'static')
 
 
 
@@ -514,6 +526,8 @@ rampas:insert(rampa46)
 
 local function multiplica_rampas(rampas)
     for i = 1, rampas.numChildren, 1 do
+        local position_endline = 0;
+
         local rampa = display.newImage(rampas[i].image)
         rampa:setReferencePoint( display.CenterLeftReferencePoint )
         rampa.type = rampas[i].type
@@ -546,39 +560,41 @@ local function multiplica_rampas(rampas)
         rampa4.y = rampas[i].y + 32000
         physics.addBody(rampa4, 'static')
 
-        local rampa5 = display.newImage(rampas[i].image)
-        rampa5:setReferencePoint( display.CenterLeftReferencePoint )
-        rampa5.type = rampas[i].type
-        rampa5.name = rampas[i].name
-        rampa5.x = rampas[i].x
-        rampa5.y = rampas[i].y + 38400
-        physics.addBody(rampa5, 'static')
+        -- local rampa5 = display.newImage(rampas[i].image)
+        -- rampa5:setReferencePoint( display.CenterLeftReferencePoint )
+        -- rampa5.type = rampas[i].type
+        -- rampa5.name = rampas[i].name
+        -- rampa5.x = rampas[i].x
+        -- rampa5.y = rampas[i].y + 38400
+        -- physics.addBody(rampa5, 'static')
 
-        local rampa6 = display.newImage(rampas[i].image)
-        rampa6:setReferencePoint( display.CenterLeftReferencePoint )
-        rampa6.type = rampas[i].type
-        rampa6.name = rampas[i].name
-        rampa6.x = rampas[i].x
-        rampa6.y = rampas[i].y + 44800
-        physics.addBody(rampa6, 'static')
+        -- local rampa6 = display.newImage(rampas[i].image)
+        -- rampa6:setReferencePoint( display.CenterLeftReferencePoint )
+        -- rampa6.type = rampas[i].type
+        -- rampa6.name = rampas[i].name
+        -- rampa6.x = rampas[i].x
+        -- rampa6.y = rampas[i].y + 44800
+        -- physics.addBody(rampa6, 'static')
 
-        local rampa7 = display.newImage(rampas[i].image)
-        rampa7:setReferencePoint( display.CenterLeftReferencePoint )
-        rampa7.type = rampas[i].type
-        rampa7.name = rampas[i].name
-        rampa7.x = rampas[i].x
-        rampa7.y = rampas[i].y + 51200
-        physics.addBody(rampa7, 'static')
+        -- local rampa7 = display.newImage(rampas[i].image)
+        -- rampa7:setReferencePoint( display.CenterLeftReferencePoint )
+        -- rampa7.type = rampas[i].type
+        -- rampa7.name = rampas[i].name
+        -- rampa7.x = rampas[i].x
+        -- rampa7.y = rampas[i].y + 51200
+        -- physics.addBody(rampa7, 'static')
 
         rampas:insert(rampa)
         rampas:insert(rampa2)
         rampas:insert(rampa3)
         rampas:insert(rampa4)
-        rampas:insert(rampa5)
-        rampas:insert(rampa6)
-        rampas:insert(rampa7)
-    end
+        -- rampas:insert(rampa5)
+        -- rampas:insert(rampa6)
+        -- rampas:insert(rampa7)
 
+        print(rampas[i].y + 51200);
+
+    end
 end
 
 multiplica_rampas(rampas, 12800)
@@ -1274,37 +1290,37 @@ local function multiplica_obstaculos(obstaculos)
         obstaculo4.y = obstaculos[i].y + 32000
         physics.addBody(obstaculo4, 'static')
 
-        local obstaculo5 = display.newImage(obstaculos[i].image)
-        obstaculo5:setReferencePoint( display.CenterLeftReferencePoint )
-        obstaculo5.type = obstaculos[i].type
-        obstaculo5.name = obstaculos[i].name
-        obstaculo5.x = obstaculos[i].x
-        obstaculo5.y = obstaculos[i].y + 38400
-        physics.addBody(obstaculo5, 'static')
+        -- local obstaculo5 = display.newImage(obstaculos[i].image)
+        -- obstaculo5:setReferencePoint( display.CenterLeftReferencePoint )
+        -- obstaculo5.type = obstaculos[i].type
+        -- obstaculo5.name = obstaculos[i].name
+        -- obstaculo5.x = obstaculos[i].x
+        -- obstaculo5.y = obstaculos[i].y + 38400
+        -- physics.addBody(obstaculo5, 'static')
 
-        local obstaculo6 = display.newImage(obstaculos[i].image)
-        obstaculo6:setReferencePoint( display.CenterLeftReferencePoint )
-        obstaculo6.type = obstaculos[i].type
-        obstaculo6.name = obstaculos[i].name
-        obstaculo6.x = obstaculos[i].x
-        obstaculo6.y = obstaculos[i].y + 44800
-        physics.addBody(obstaculo6, 'static')
+        -- local obstaculo6 = display.newImage(obstaculos[i].image)
+        -- obstaculo6:setReferencePoint( display.CenterLeftReferencePoint )
+        -- obstaculo6.type = obstaculos[i].type
+        -- obstaculo6.name = obstaculos[i].name
+        -- obstaculo6.x = obstaculos[i].x
+        -- obstaculo6.y = obstaculos[i].y + 44800
+        -- physics.addBody(obstaculo6, 'static')
 
-        local obstaculo7 = display.newImage(obstaculos[i].image)
-        obstaculo7:setReferencePoint( display.CenterLeftReferencePoint )
-        obstaculo7.type = obstaculos[i].type
-        obstaculo7.name = obstaculos[i].name
-        obstaculo7.x = obstaculos[i].x
-        obstaculo7.y = obstaculos[i].y + 51200
-        physics.addBody(obstaculo7, 'static')
+        -- local obstaculo7 = display.newImage(obstaculos[i].image)
+        -- obstaculo7:setReferencePoint( display.CenterLeftReferencePoint )
+        -- obstaculo7.type = obstaculos[i].type
+        -- obstaculo7.name = obstaculos[i].name
+        -- obstaculo7.x = obstaculos[i].x
+        -- obstaculo7.y = obstaculos[i].y + 51200
+        -- physics.addBody(obstaculo7, 'static')
 
         obstaculos:insert(obstaculo)
         obstaculos:insert(obstaculo2)
         obstaculos:insert(obstaculo3)
         obstaculos:insert(obstaculo4)
-        obstaculos:insert(obstaculo5)
-        obstaculos:insert(obstaculo6)
-        obstaculos:insert(obstaculo7)
+        -- obstaculos:insert(obstaculo5)
+        -- obstaculos:insert(obstaculo6)
+        -- obstaculos:insert(obstaculo7)
     end
 end
 
@@ -1315,6 +1331,9 @@ multiplica_obstaculos(obstaculos)
 
 
 local function move_rampa(yOffset)
+    -- move endline
+    endline.y = endline.y - yOffset
+
 	for i = 1, rampas.numChildren, 1 do
 		rampas[i].y = rampas[i].y - yOffset
 	end
@@ -1592,13 +1611,52 @@ end
 
 
 -- Scores
-local score_text = display.newText("Scores: " .. scores, 110, 5, "Lucida Console", 14)
-score_text:setTextColor(255, 0, 0)
+local score_text = display.newText("Scores: " .. scores, 170, 440, "Lucida Console", 20)
+score_text:setTextColor(0, 0, 0)
 
 
 -- Lifes
-local life_text = display.newText("Life: " .. life, 20, 5, "Lucida Console", 14)
-life_text:setTextColor(255, 0, 0)
+local life_text = display.newText("Life: " .. life, 20, 5, "Lucida Console", 20)
+life_text:setTextColor(0, 0, 0)
+
+
+local function endgame()
+    can_move = false
+    if status_game == 'playing' then
+
+        local game_win = display.newImage( "images/game-win.png" )
+        game_win:setReferencePoint( display.CenterLeftReferencePoint )
+        game_win.x = 0
+        game_win.y = _H
+
+        local total_scores = display.newText(scores, 235, 285, "Helvetica", 27)
+        total_scores:setTextColor(0, 0, 0)
+
+        player.isVisible = false
+    end
+
+    status_game = 'ended'
+end
+
+
+local function game_over()
+    if status_game == 'playing' then
+        can_move = false
+        time = 0;
+
+        local game_over = display.newImage( "images/game-over.png" )
+        game_over:setReferencePoint( display.CenterLeftReferencePoint )
+        game_over.x = 0
+        game_over.y = _H
+
+        local total_scores = display.newText(scores, 235, 285, "Helvetica", 27)
+        total_scores:setTextColor(0, 0, 0)
+
+        player.isVisible = false
+    end
+
+    status_game = 'over'
+end
 
 
 local function collision(self, event)
@@ -1656,6 +1714,13 @@ local function collision(self, event)
 
 			life_text.text = "Life: " .. life
 
+            if life <= 0 then
+                life = 0
+                life_text.text = "Life: " .. life
+
+                game_over()
+            end
+
 		elseif event.phase == "ended" then
 			print('Player: ' .. self.bodyType)
 			print('volta ao jogo')
@@ -1663,22 +1728,61 @@ local function collision(self, event)
 			print('Life: ' .. life)
 		end
 	end
+
+
+
+    -- colisao com linha final
+    if event.other.type == 'endline' then
+        if event.phase == "began" then
+
+        elseif event.phase == "ended" then
+            endgame()
+        end
+    end
+end
+
+
+
+local timeLeftWarning = display.newImage( "images/time-over.png" )
+timeLeftWarning:setReferencePoint( display.CenterLeftReferencePoint )
+timeLeftWarning.x = 12
+timeLeftWarning.y = _H
+timeLeftWarning.isVisible = false
+
+function hide_time_warning()
+    timeLeftWarning.isVisible = false
 end
 
 
 
 -- Timer
-local timeLimit = 120
-timeLeft = display.newText("Time: " .. timeLimit, 210, 5, "Lucida Console", 14)
-timeLeft:setTextColor(255, 0, 0)
+-- padrao para velocidade 0: 270
+local timeLimit = 270
+timeLeft = display.newText("Time: " .. timeLimit, 200, 5, "Lucida Console", 20)
+timeLeft:setTextColor(0, 0, 0)
 
 
 local function timerDown()
-	timeLimit = timeLimit-1
-	timeLeft.text = "Time: " .. timeLimit
-	if timeLimit == 0 then
-		print("Time Out") -- or do your code for time out
-	end
+    if status_game == 'playing' then
+    	timeLimit = timeLimit-1
+    	timeLeft.text = "Time: " .. timeLimit
+
+        if timeLimit < 40 then
+            timeLeft:setTextColor(255, 0, 0)
+            timeLeftWarning.isVisible = true
+
+            timer.performWithDelay(1500, hide_time_warning, timeLeftWarning)
+        end
+
+        if timeLimit < 33 then
+            timeLeftWarning.isVisible = false
+        end
+
+    	if timeLimit == 0 then
+            game_over()
+    		print("Time Out")
+    	end
+    end
 end
 timer.performWithDelay(1000, timerDown, timeLimit)
 
